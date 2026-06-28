@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The 90-Day Job Search Sprint by Jobbyist — Claim 50% Off Jobbyist Pro</title>
+<meta name="description" content="A 90-day, AI-powered placement system for South African jobseekers. Structured phases, expert + AI guidance, and a track record of 4 verified interviews in 60 days. Claim 50% off Jobbyist Pro — limited to the first 100 redemptions." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ===================================================================
+     TOKENS
+     =================================================================== */
+  :root{
+    --bg:#ffffff;
+    --surface:#f5f7fb;
+    --surface-2:#eef1f8;
+    --ink:#0b0b0c;
+    --ink-soft:#52565f;
+    --ink-faint:#8a8e98;
+    --line:#e6e8ee;
+    --blue-1:#1450ff;
+    --blue-2:#00c2ff;
+    --blue-deep:#0b2e99;
+    --urgency:#ff4438;
+    --urgency-soft:#fff1ef;
+    --good:#10a05e;
+    --radius:14px;
+    --radius-lg:22px;
+    --shadow-sm:0 1px 2px rgba(11,11,12,0.06);
+    --shadow-md:0 12px 30px rgba(11,11,12,0.08);
+    --shadow-lg:0 24px 60px rgba(20,80,255,0.16);
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  input{font-family:inherit;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  h1,h2,h3,.display{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:0.005em;
+    line-height:1.04;
+    margin:0;
+  }
+
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;font-weight:700;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--blue-1);
+    margin:0 0 16px;
+  }
+  .eyebrow::before{
+    content:'';width:18px;height:2px;
+    background:linear-gradient(90deg,var(--blue-1),var(--blue-2));
+    display:inline-block;border-radius:2px;
+  }
+
+  :focus-visible{outline:3px solid var(--blue-1);outline-offset:3px;border-radius:4px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;}
+  }
+
+  /* ===================================================================
+     LOGO LOCKUPS (recreated in CSS — see notes to Mikey at bottom of chat
+     re: original PNG logo files)
+     =================================================================== */
+  .logo-jobbyist{
+    font-family:'Anton',sans-serif;
+    font-size:22px;
+    letter-spacing:-0.01em;
+    transform:skewX(-8deg);
+    display:inline-block;
+    color:var(--ink);
+  }
+  .logo-jobbyist .dot{color:var(--blue-1);}
+
+  .sprint-lockup{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:0.92;}
+  .sprint-lockup .the{
+    font-family:'Inter',sans-serif;font-weight:800;font-size:13px;
+    letter-spacing:0.18em;color:var(--ink-soft);margin-bottom:4px;
+  }
+  .sprint-lockup .line{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(30px,5.4vw,58px);
+    transform:skewX(-6deg);
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  .sprint-lockup .line.accent{
+    color:var(--blue-1);
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .speedlines{height:0.42em;width:1.1em;flex-shrink:0;}
+  .speedlines polygon{fill:var(--ink);}
+  .sprint-lockup .line.accent .speedlines polygon{fill:var(--blue-1);}
+
+  .sprint-lockup.small .line{font-size:clamp(16px,2.2vw,22px);}
+  .sprint-lockup.small .the{font-size:9px;margin-bottom:1px;}
+
+  /* ===================================================================
+     PRELOADER
+     =================================================================== */
+  #preloader{
+    position:fixed;inset:0;z-index:9999;background:#ffffff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:34px;transition:opacity 0.6s ease, visibility 0.6s ease;
+  }
+  #preloader.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  .preload-mark{text-align:center;}
+  .preload-bar{
+    width:min(70vw,320px);height:6px;border-radius:99px;
+    background:var(--surface-2);overflow:hidden;position:relative;
+  }
+  .preload-bar__fill{
+    position:absolute;inset:0;width:0%;border-radius:99px;
+    background:linear-gradient(90deg,var(--blue-1),var(--blue-2));
+    animation:loadfill 3.4s cubic-bezier(.4,0,.2,1) forwards;
+    box-shadow:0 0 16px rgba(20,80,255,0.45);
+  }
+  @keyframes loadfill{
+    0%{width:0%;}
+    60%{width:72%;}
+    100%{width:100%;}
+  }
+  .preload-text{
+    font-family:'JetBrains Mono',monospace;font-size:13px;
+    color:var(--ink-faint);letter-spacing:0.06em;text-align:center;
+  }
+
+  body.is-loading{overflow:hidden;height:100vh;}
+  #site{opacity:0;transition:opacity 0.7s ease;}
+  #site.ready{opacity:1;}
+
+  /* ===================================================================
+     HEADER
+     =================================================================== */
+  header.site-header{
+    position:sticky;top:0;z-index:500;background:rgba(255,255,255,0.88);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:74px;
+  }
+  .header-left{display:flex;align-items:center;gap:14px;}
+  .header-tag{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-faint);
+    border-left:1px solid var(--line);padding-left:14px;letter-spacing:0.05em;
+    display:none;
+  }
+  nav.main-nav{display:flex;align-items:center;gap:30px;}
+  nav.main-nav a{
+    font-size:14px;font-weight:600;color:var(--ink-soft);
+    transition:color .2s;
+  }
+  nav.main-nav a:hover{color:var(--ink);}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-weight:700;font-size:14px;border-radius:99px;
+    padding:13px 26px;transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-primary{
+    background:linear-gradient(90deg,var(--blue-1),var(--blue-2));
+    color:#fff;box-shadow:var(--shadow-md);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(20,80,255,0.3);}
+  .btn-ghost{border:1.5px solid var(--ink);color:var(--ink);}
+  .btn-ghost:hover{background:var(--ink);color:#fff;}
+  .btn-sm{padding:10px 18px;font-size:13px;}
+  .btn-block{width:100%;}
+  .nav-cta{display:flex;align-items:center;gap:14px;}
+
+  .hamburger{display:none;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);align-items:center;justify-content:center;}
+  .hamburger span, .hamburger span::before, .hamburger span::after{
+    content:'';display:block;width:18px;height:2px;background:var(--ink);position:relative;
+  }
+  .hamburger span::before{position:absolute;top:-6px;}
+  .hamburger span::after{position:absolute;top:6px;}
+
+  /* ===================================================================
+     HERO
+     =================================================================== */
+  .hero{
+    padding:84px 0 56px;background:
+      radial-gradient(circle at 85% -10%, rgba(20,80,255,0.08), transparent 55%);
+    text-align:center;position:relative;
+  }
+  .hero .sprint-lockup{align-items:center;margin:0 auto 26px;}
+  .hero-sub{
+    max-width:660px;margin:0 auto 36px;color:var(--ink-soft);
+    font-size:18px;line-height:1.6;
+  }
+  .hero-actions{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:54px;}
+  .hero-note{font-size:13px;color:var(--ink-faint);margin-top:14px;}
+
+  .stat-strip{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    max-width:920px;margin:0 auto;border-radius:var(--radius-lg);
+    background:var(--ink);color:#fff;box-shadow:var(--shadow-lg);
+    overflow:hidden;
+  }
+  .stat{padding:26px 18px;border-right:1px solid rgba(255,255,255,0.12);text-align:center;}
+  .stat:last-child{border-right:none;}
+  .stat .num{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(22px,3vw,30px);
+    background:linear-gradient(90deg,#fff,#bcd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .stat .lbl{font-size:11.5px;color:rgba(255,255,255,0.65);margin-top:6px;letter-spacing:0.03em;line-height:1.3;}
+
+  /* ===================================================================
+     VIDEO SECTION
+     =================================================================== */
+  .video-section{padding:70px 0;}
+  .video-frame{
+    max-width:880px;margin:0 auto;border-radius:var(--radius-lg);
+    overflow:hidden;box-shadow:var(--shadow-lg);background:var(--ink);
+    position:relative;aspect-ratio:16/9;
+  }
+  .video-frame video{width:100%;height:100%;display:block;object-fit:cover;background:#000;}
+  .video-caption{text-align:center;color:var(--ink-faint);font-size:13px;margin-top:16px;}
+
+  /* ===================================================================
+     SECTION GENERIC
+     =================================================================== */
+  section{padding:84px 0;}
+  .section-alt{background:var(--surface);}
+  .section-head{max-width:680px;margin:0 auto 50px;text-align:center;}
+  .section-head h2{font-size:clamp(30px,4.4vw,46px);}
+  .section-head p{color:var(--ink-soft);font-size:16.5px;margin-top:14px;line-height:1.6;}
+
+  /* WHAT'S INCLUDED */
+  .grid-5{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .incl-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
+    padding:30px 26px;box-shadow:var(--shadow-sm);
+  }
+  .incl-card .icon{
+    width:42px;height:42px;border-radius:12px;
+    background:linear-gradient(135deg,var(--blue-1),var(--blue-2));
+    margin-bottom:18px;display:flex;align-items:center;justify-content:center;
+    color:#fff;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;
+  }
+  .incl-card h3{font-family:'Inter',sans-serif;font-weight:800;font-size:17px;text-transform:none;margin-bottom:10px;}
+  .incl-card ul{display:flex;flex-direction:column;gap:8px;}
+  .incl-card li{font-size:14.5px;color:var(--ink-soft);padding-left:18px;position:relative;line-height:1.5;}
+  .incl-card li::before{content:'';position:absolute;left:0;top:7px;width:7px;height:7px;border-radius:2px;background:var(--blue-1);}
+  .incl-card.guarantee{background:var(--ink);color:#fff;border:none;}
+  .incl-card.guarantee h3{color:#fff;}
+  .incl-card.guarantee li{color:rgba(255,255,255,0.75);}
+  .incl-card.guarantee li::before{background:var(--blue-2);}
+
+  /* METHODOLOGY / SPRINT TRACK */
+  .track{position:relative;margin-top:30px;}
+  .track-rail{
+    position:absolute;top:26px;left:26px;right:26px;height:4px;
+    background:var(--line);border-radius:99px;
+  }
+  .track-rail__fill{
+    position:absolute;inset:0;width:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--blue-1),var(--blue-2));
+  }
+  .track-grid{
+    display:grid;grid-template-columns:repeat(6,1fr);gap:14px;position:relative;
+  }
+  .checkpoint{padding-top:56px;position:relative;text-align:left;}
+  .checkpoint__node{
+    position:absolute;top:14px;left:50%;transform:translateX(-50%);
+    width:26px;height:26px;border-radius:50%;
+    background:#fff;border:4px solid var(--blue-1);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--blue-1);
+    z-index:2;
+  }
+  .checkpoint:first-child .checkpoint__node{left:0;transform:none;}
+  .checkpoint:first-child{text-align:left;}
+  .checkpoint:last-child .checkpoint__node{left:auto;right:0;transform:none;}
+  .checkpoint:last-child{text-align:right;}
+  .checkpoint .days{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--blue-1);font-weight:700;
+    margin-bottom:6px;display:block;
+  }
+  .checkpoint h3{font-family:'Inter',sans-serif;font-weight:800;font-size:15px;text-transform:none;margin-bottom:8px;}
+  .checkpoint p{font-size:13.3px;color:var(--ink-soft);line-height:1.5;margin:0;}
+  .track-note{text-align:center;color:var(--ink-faint);font-size:13px;margin-top:42px;}
+
+  /* PRICING */
+  .pricing-table{
+    max-width:920px;margin:0 auto;border-radius:var(--radius-lg);
+    border:1px solid var(--line);overflow:hidden;background:#fff;
+  }
+  .pricing-row{
+    display:grid;grid-template-columns:1.2fr 1fr 2fr;
+    border-bottom:1px solid var(--line);
+  }
+  .pricing-row:last-child{border-bottom:none;}
+  .pricing-row.head{background:var(--ink);color:#fff;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;}
+  .pricing-row > div{padding:18px 24px;display:flex;align-items:center;}
+  .pricing-row .tier{font-weight:800;}
+  .pricing-row .price{font-family:'JetBrains Mono',monospace;color:var(--blue-1);font-weight:700;}
+  .pricing-row.head .price{color:#fff;}
+  .pricing-note{max-width:680px;margin:34px auto 0;text-align:center;color:var(--ink-soft);font-size:14.5px;line-height:1.6;background:var(--urgency-soft);border:1px solid #ffd9d5;border-radius:var(--radius);padding:18px 22px;}
+  .pricing-note b{color:var(--urgency);}
+
+  /* OFFER / SIGNUP */
+  .offer{
+    background:var(--ink);color:#fff;position:relative;overflow:hidden;
+  }
+  .offer::before{
+    content:'';position:absolute;top:-30%;right:-10%;width:560px;height:560px;
+    background:radial-gradient(circle,rgba(20,80,255,0.4),transparent 70%);
+  }
+  .offer-inner{position:relative;display:grid;grid-template-columns:1.05fr 0.95fr;gap:60px;align-items:flex-start;}
+  .offer-copy .eyebrow{color:var(--blue-2);}
+  .offer-copy h2{font-size:clamp(28px,3.6vw,42px);color:#fff;margin-bottom:18px;}
+  .offer-copy p{color:rgba(255,255,255,0.72);font-size:16px;line-height:1.65;margin-bottom:22px;}
+  .offer-list{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+  .offer-list li{display:flex;gap:10px;align-items:flex-start;color:rgba(255,255,255,0.86);font-size:14.5px;}
+  .offer-list li .tick{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--blue-2);color:var(--ink);font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:900;margin-top:1px;}
+
+  .seats-meter{
+    background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);
+    border-radius:var(--radius);padding:16px 18px;display:flex;align-items:center;gap:14px;
+  }
+  .seats-meter .badge{
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;
+    background:var(--urgency);color:#fff;border-radius:99px;padding:6px 12px;white-space:nowrap;
+  }
+  .seats-meter .meter-bar{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,0.12);overflow:hidden;}
+  .seats-meter .meter-bar__fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--urgency),#ff8a3d);transition:width .6s ease;}
+  .seats-meter .meter-txt{font-size:12px;color:rgba(255,255,255,0.7);white-space:nowrap;}
+
+  .form-card{
+    background:#fff;color:var(--ink);border-radius:var(--radius-lg);
+    padding:34px;box-shadow:var(--shadow-lg);
+  }
+  .form-card h3{font-family:'Inter',sans-serif;font-weight:800;font-size:20px;text-transform:none;margin-bottom:6px;}
+  .form-card .sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:22px;line-height:1.5;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;font-weight:700;color:var(--ink-soft);margin-bottom:6px;letter-spacing:0.02em;}
+  .field input{
+    width:100%;padding:13px 14px;border-radius:10px;border:1.5px solid var(--line);
+    font-size:14.5px;color:var(--ink);transition:border-color .15s;
+  }
+  .field input:focus{border-color:var(--blue-1);outline:none;}
+  .field-error{font-size:12px;color:var(--urgency);margin-top:5px;display:none;}
+  .field.invalid input{border-color:var(--urgency);}
+  .field.invalid .field-error{display:block;}
+  .form-fine{font-size:11.5px;color:var(--ink-faint);margin-top:14px;line-height:1.5;}
+  .form-status{font-size:13px;margin-top:12px;display:none;}
+  .form-status.show{display:block;}
+  .form-status.err{color:var(--urgency);}
+
+  .success-card{display:none;text-align:center;}
+  .success-card.show{display:block;}
+  .success-card .code{
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:24px;
+    background:var(--surface);border:2px dashed var(--blue-1);border-radius:12px;
+    padding:16px;letter-spacing:0.06em;margin:18px 0;color:var(--blue-deep);
+  }
+  .copy-btn{font-size:12.5px;text-decoration:underline;color:var(--blue-1);margin-top:-8px;display:inline-block;}
+
+  /* GUARANTEE */
+  .guarantee-band{display:grid;grid-template-columns:0.9fr 1.1fr;gap:50px;align-items:center;}
+  .guarantee-band .badge-circle{
+    width:160px;height:160px;border-radius:50%;
+    background:linear-gradient(135deg,var(--blue-1),var(--blue-2));
+    color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-weight:700;margin:0 auto;box-shadow:var(--shadow-lg);
+    text-align:center;
+  }
+  .badge-circle .big{font-size:30px;}
+  .badge-circle .sm{font-size:11px;letter-spacing:0.05em;}
+  .guarantee-list{display:flex;flex-direction:column;gap:10px;margin:20px 0 0;}
+  .guarantee-list li{font-size:14.5px;color:var(--ink-soft);padding-left:20px;position:relative;line-height:1.5;}
+  .guarantee-list li::before{content:'✓';position:absolute;left:0;color:var(--good);font-weight:800;}
+  .guarantee-warn{margin-top:18px;font-size:13px;color:var(--ink-faint);background:var(--surface);border-radius:10px;padding:14px 16px;border:1px solid var(--line);}
+
+  /* FAQ */
+  .faq-list{max-width:760px;margin:0 auto;}
+  details.faq-item{
+    border-bottom:1px solid var(--line);padding:20px 0;
+  }
+  details.faq-item summary{
+    list-style:none;cursor:pointer;display:flex;justify-content:space-between;
+    align-items:center;gap:16px;font-weight:700;font-size:16px;
+  }
+  details.faq-item summary::-webkit-details-marker{display:none;}
+  details.faq-item summary .plus{
+    flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--blue-1);
+    transition:transform .2s ease;
+  }
+  details.faq-item[open] summary .plus{transform:rotate(45deg);}
+  .faq-answer{
+    margin-top:14px;color:var(--ink-soft);font-size:14.5px;line-height:1.7;
+    white-space:pre-line;
+  }
+  .concierge-cta{
+    margin-top:46px;text-align:center;background:var(--surface);
+    border-radius:var(--radius-lg);padding:30px;
+  }
+  .concierge-cta p{font-size:14.5px;color:var(--ink-soft);margin-bottom:16px;}
+
+  /* PARTNERS */
+  .partners-shell{
+    max-width:880px;margin:0 auto;overflow:hidden;border-radius:var(--radius-lg);
+    border:1px solid var(--line);background:#fff;padding:38px 30px;
+  }
+  .partners-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .partner-slot{
+    flex:1;display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:var(--ink-faint);
+    padding:14px 6px;border-radius:10px;transition:opacity .5s ease, transform .5s ease;
+    text-align:center;
+  }
+  .partners-note{text-align:center;font-size:12px;color:var(--ink-faint);margin-top:18px;}
+  .partners-dots{display:flex;justify-content:center;gap:6px;margin-top:16px;}
+  .partners-dots span{width:6px;height:6px;border-radius:50%;background:var(--line);}
+  .partners-dots span.active{background:var(--blue-1);}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:rgba(255,255,255,0.7);padding:60px 0 30px;}
+  .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.1);}
+  .footer-top h4{font-size:12.5px;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.45);margin:0 0 16px;font-weight:700;}
+  .footer-top a, .footer-top p{font-size:14px;color:rgba(255,255,255,0.75);display:block;margin-bottom:10px;line-height:1.5;}
+  .footer-top a:hover{color:#fff;}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;flex-wrap:wrap;gap:14px;}
+  .footer-bottom p{font-size:12px;color:rgba(255,255,255,0.4);margin:0;max-width:640px;line-height:1.6;}
+
+  /* ===================================================================
+     RESPONSIVE
+     =================================================================== */
+  @media (max-width: 980px){
+    .grid-5{grid-template-columns:repeat(2,1fr);}
+    .offer-inner{grid-template-columns:1fr;}
+    .guarantee-band{grid-template-columns:1fr;text-align:center;}
+    .track-grid{grid-template-columns:repeat(3,1fr);row-gap:46px;}
+    .track-rail{display:none;}
+    .checkpoint .checkpoint__node{left:50% !important;transform:translateX(-50%) !important;}
+    .checkpoint{text-align:center !important;}
+    .footer-top{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width: 720px){
+    nav.main-nav{display:none;}
+    .nav-cta .btn-ghost{display:none;}
+    .hamburger{display:flex;}
+    .stat-strip{grid-template-columns:repeat(2,1fr);}
+    .stat{border-bottom:1px solid rgba(255,255,255,0.12);}
+    .grid-5{grid-template-columns:1fr;}
+    .track-grid{grid-template-columns:1fr;}
+    .pricing-row{grid-template-columns:1fr;}
+    .pricing-row > div{padding:10px 24px;}
+    .pricing-row > div:first-child{padding-top:18px;}
+    .pricing-row > div:last-child{padding-bottom:18px;}
+    .footer-top{grid-template-columns:1fr;}
+    section{padding:60px 0;}
+  }
+</style>
+</head>
+<body class="is-loading">
+
+<!-- =====================================================================
+     PRELOADER
+     ===================================================================== -->
+<div id="preloader" role="status" aria-live="polite">
+  <div class="preload-mark">
+    <div class="sprint-lockup" style="align-items:center;">
+      <span class="the">THE</span>
+      <span class="line">90-DAY</span>
+      <span class="line">JOB SEARCH</span>
+      <span class="line accent">SPRINT
+        <svg class="speedlines" viewBox="0 0 60 24"><polygon points="0,2 60,8 0,8"/><polygon points="0,10 50,14 0,14"/><polygon points="0,16 40,19 0,19"/></svg>
+      </span>
+    </div>
+  </div>
+  <div class="preload-bar"><div class="preload-bar__fill"></div></div>
+  <div class="preload-text">Loading your experience…</div>
+</div>
+
+<div id="site">
+
+  <!-- ===================================================================
+       HEADER
+       =================================================================== -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="header-left">
+        <span class="logo-jobbyist">JOBBYIST<span class="dot">.</span></span>
+        <span class="header-tag">90-DAY JOB SEARCH SPRINT</span>
+      </div>
+      <nav class="main-nav">
+        <a href="#included">What's Included</a>
+        <a href="#method">The Method</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="Service_Handbook_90-Day_Job_Sprint_by_Jobbyist.pdf" class="btn btn-ghost btn-sm" target="_blank" rel="noopener">Service Handbook</a>
+        <a href="#claim" class="btn btn-primary btn-sm">Claim 50% Off</a>
+        <button class="hamburger" aria-label="Open menu"><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================
+       HERO
+       =================================================================== -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow" style="justify-content:center;">JOBBYIST SOUTH AFRICA · PLACEMENT SYSTEM</div>
+      <div class="sprint-lockup">
+        <span class="the">THE</span>
+        <span class="line">90-DAY</span>
+        <span class="line">JOB SEARCH</span>
+        <span class="line accent">SPRINT
+          <svg class="speedlines" viewBox="0 0 60 24"><polygon points="0,2 60,8 0,8"/><polygon points="0,10 50,14 0,14"/><polygon points="0,16 40,19 0,19"/></svg>
+        </span>
+      </div>
+      <p class="hero-sub">A structured, AI-powered placement system that takes South African jobseekers from scattered applications to offer-ready — in six guided phases, over 90 days.</p>
+      <div class="hero-actions">
+        <a href="#claim" class="btn btn-primary">Claim 50% Off Jobbyist Pro</a>
+        <a href="#method" class="btn btn-ghost">See How It Works</a>
+      </div>
+
+      <div class="stat-strip">
+        <div class="stat"><div class="num">04</div><div class="lbl">Verified interviews<br>within 60 days*</div></div>
+        <div class="stat"><div class="num">+73%</div><div class="lbl">Higher hire rate vs.<br>unstructured searches*</div></div>
+        <div class="stat"><div class="num">06</div><div class="lbl">Guided phases,<br>start to placement</div></div>
+        <div class="stat"><div class="num">90</div><div class="lbl">Days from Foundation<br>to Review & Placement</div></div>
+      </div>
+      <p class="hero-note">*Based on Jobbyist's published performance guarantees. Jobbyist is not a recruitment agency and does not guarantee employment outcomes.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       VIDEO
+       =================================================================== -->
+  <section class="video-section">
+    <div class="wrap">
+      <div class="eyebrow" style="justify-content:center;width:100%;display:flex;">SEE IT IN ACTION</div>
+      <h2 style="text-align:center;font-size:clamp(26px,3.6vw,38px);margin-bottom:34px;">Watch the 90-Day Sprint, explained</h2>
+      <div class="video-frame">
+        <!--
+          Replace the src below with your hosted explainer video file or
+          swap this <video> element for a YouTube/Vimeo <iframe> embed.
+        -->
+        <video controls preload="metadata" poster="" aria-label="The 90-Day Job Search Sprint animated explainer video">
+          <source src="REPLACE-WITH-EXPLAINER-VIDEO-URL.mp4" type="video/mp4">
+          Your browser doesn't support embedded video. <a href="REPLACE-WITH-EXPLAINER-VIDEO-URL.mp4">Download the explainer video</a> instead.
+        </video>
+      </div>
+      <p class="video-caption">90 seconds on how the Sprint moves you from application to offer.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       WHAT'S INCLUDED
+       =================================================================== -->
+  <section id="included" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">WHAT'S INCLUDED</div>
+        <h2>Everything you need to run a serious search</h2>
+        <p>Every Sprint client gets human guidance, AI-powered tooling, and a structured toolkit — not just a list of job boards.</p>
+      </div>
+      <div class="grid-5">
+        <div class="incl-card">
+          <div class="icon">AI</div>
+          <h3>Human + AI placement support</h3>
+          <ul>
+            <li>1-on-1 expert career guidance throughout the programme</li>
+            <li>AI-powered strategy and application analysis (Claude, Gemini, OpenAI)</li>
+            <li>Weekly check-in calls with your dedicated career consultant</li>
+          </ul>
+        </div>
+        <div class="incl-card">
+          <div class="icon">+</div>
+          <h3>Upskilling &amp; certification pathways</h3>
+          <ul>
+            <li>Access to Coursera, Google Skillshop, HubSpot, LinkedIn Learning, and EdX</li>
+            <li>Guided certification recommendations based on your target roles</li>
+          </ul>
+        </div>
+        <div class="incl-card">
+          <div class="icon">⚙</div>
+          <h3>Career management toolkit</h3>
+          <ul>
+            <li>Role Radar — AI job-matching across full-time, part-time, remote, hybrid &amp; contract roles</li>
+            <li>Resume Assistant &amp; Cover Letter Generator</li>
+            <li>Application tracker &amp; daily task checklists</li>
+            <li>Recruiter outreach email &amp; messaging templates</li>
+          </ul>
+        </div>
+        <div class="incl-card">
+          <div class="icon">✓</div>
+          <h3>Application quality &amp; execution</h3>
+          <ul>
+            <li>Professional CV optimisation, ATS-ready formatting</li>
+            <li>LinkedIn profile refresh and optimisation</li>
+            <li>Targeted recruiter and platform outreach strategy</li>
+          </ul>
+        </div>
+        <div class="incl-card guarantee">
+          <div class="icon" style="background:rgba(255,255,255,0.16);">★</div>
+          <h3>Performance guarantee</h3>
+          <ul>
+            <li>4 verified interviews within 60 days</li>
+            <li>+73% higher hire rate vs. unstructured searches</li>
+            <li>30-day money-back guarantee on all Sprint tiers, conditions apply</li>
+          </ul>
+        </div>
+        <div class="incl-card" style="display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <div class="icon">PDF</div>
+            <h3>Read the full handbook</h3>
+            <p style="font-size:14.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 18px;">Every policy, responsibility, and operating rule — straight from Jobbyist's official Service Handbook.</p>
+          </div>
+          <a href="Service_Handbook_90-Day_Job_Sprint_by_Jobbyist.pdf" target="_blank" rel="noopener" class="btn btn-ghost btn-sm btn-block">Download the Handbook</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       METHODOLOGY / TRACK
+       =================================================================== -->
+  <section id="method">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">THE METHOD</div>
+        <h2>Six phases. One finish line.</h2>
+        <p>The Sprint runs on a fixed 90-day clock. Later phases build on earlier ones — some run in parallel as your search gathers momentum.</p>
+      </div>
+
+      <div class="track">
+        <div class="track-rail"><div class="track-rail__fill"></div></div>
+        <div class="track-grid">
+          <div class="checkpoint">
+            <div class="checkpoint__node">01</div>
+            <span class="days">DAYS 1–7</span>
+            <h3>Foundation</h3>
+            <p>Profile audit, goal setting, toolkit setup, upskilling plan, career strategy session.</p>
+          </div>
+          <div class="checkpoint">
+            <div class="checkpoint__node">02</div>
+            <span class="days">DAYS 8–21</span>
+            <h3>Market Targeting</h3>
+            <p>Define target roles, salary benchmarks, daily application targets, recruiter list.</p>
+          </div>
+          <div class="checkpoint">
+            <div class="checkpoint__node">03</div>
+            <span class="days">DAYS 22–60</span>
+            <h3>Application Sprint</h3>
+            <p>Daily applications, expert CV review, recruiter outreach, AI-powered analysis.</p>
+          </div>
+          <div class="checkpoint">
+            <div class="checkpoint__node">04</div>
+            <span class="days">DAYS 45–75</span>
+            <h3>Visibility Boost</h3>
+            <p>LinkedIn optimisation, personal branding, content strategy, network expansion.</p>
+          </div>
+          <div class="checkpoint">
+            <div class="checkpoint__node">05</div>
+            <span class="days">DAYS 60–85</span>
+            <h3>Interview Readiness</h3>
+            <p>Mock interviews, coaching sessions, confidence building, offer preparation.</p>
+          </div>
+          <div class="checkpoint">
+            <div class="checkpoint__node">06</div>
+            <span class="days">DAYS 85–90</span>
+            <h3>Review &amp; Placement</h3>
+            <p>Pipeline review, offer negotiation, post-sprint planning, final strategy session.</p>
+          </div>
+        </div>
+      </div>
+      <p class="track-note">Complete the full programme with documented participation to unlock a post-Sprint strategy session.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       PRICING
+       =================================================================== -->
+  <section id="pricing" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">STANDARD PRICING</div>
+        <h2>Four tiers. Pick your level of support.</h2>
+        <p>Reference pricing for the 90-Day Sprint on its own. Scroll down for the limited-time Jobbyist Pro offer, which includes Sprint access for free.</p>
+      </div>
+      <div class="pricing-table">
+        <div class="pricing-row head">
+          <div>Tier</div><div>Price (ZAR)</div><div>Core value</div>
+        </div>
+        <div class="pricing-row">
+          <div class="tier">DIY Toolkit</div><div class="price">R199 – R349</div><div>Self-paced templates and trackers</div>
+        </div>
+        <div class="pricing-row">
+          <div class="tier">Sprint Lite</div><div class="price">R499 – R799</div><div>Guided structure with limited support</div>
+        </div>
+        <div class="pricing-row">
+          <div class="tier">Guided Sprint</div><div class="price">R999 – R1,499</div><div>Full 90-day guided engagement</div>
+        </div>
+        <div class="pricing-row">
+          <div class="tier">Premium Sprint</div><div class="price">R1,999 – R2,999</div><div>Intensive support with priority access</div>
+        </div>
+      </div>
+      <p class="pricing-note">Right now, new <b>Jobbyist Pro</b> subscribers get the 90-Day Sprint included free, plus 50% off their first 3 months of Pro — capped at the first 100 redemptions. <a href="#claim" style="color:var(--blue-1);font-weight:700;">Jump to the offer ↓</a></p>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       OFFER + SIGNUP FORM
+       =================================================================== -->
+  <section id="claim" class="offer">
+    <div class="wrap offer-inner">
+      <div class="offer-copy">
+        <div class="eyebrow">LIMITED-TIME OFFER</div>
+        <h2>50% off Jobbyist Pro.<br>Sprint access included.</h2>
+        <p>Subscribe to Jobbyist Pro and get your first 3 months at half price — with full access to The 90-Day Job Search Sprint built in, at no extra cost.</p>
+        <ul class="offer-list">
+          <li><span class="tick">✓</span> 50% off your first 3 months of Jobbyist Pro</li>
+          <li><span class="tick">✓</span> Free access to the full 90-Day Job Search Sprint</li>
+          <li><span class="tick">✓</span> Your unique discount code, issued instantly</li>
+          <li><span class="tick">✓</span> Restricted to the first 100 redemptions, full stop</li>
+        </ul>
+
+        <div class="seats-meter">
+          <span class="badge" id="seatsBadge">100 SPOTS</span>
+          <div class="meter-bar"><div class="meter-bar__fill" id="seatsFill" style="width:0%;"></div></div>
+          <span class="meter-txt" id="seatsTxt">Limited to the first 100 redemptions</span>
+        </div>
+      </div>
+
+      <div class="form-card" id="formCard">
+        <div id="formState">
+          <h3>Get your code</h3>
+          <p class="sub">Enter your details and we'll issue one of the first 100 discount codes instantly, plus email it to you.</p>
+          <form id="claimForm" novalidate>
+            <div class="field" id="fld-name">
+              <label for="fullName">Full name</label>
+              <input type="text" id="fullName" name="name" autocomplete="name" required>
+              <div class="field-error">Please enter your full name.</div>
+            </div>
+            <div class="field" id="fld-email">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" autocomplete="email" required>
+              <div class="field-error">Please enter a valid email address.</div>
+            </div>
+            <div class="field" id="fld-phone">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+27 ..." required>
+              <div class="field-error">Please enter a valid phone number.</div>
+            </div>
+            <input type="hidden" name="discountCode" id="discountCodeField" value="">
+            <input type="hidden" name="_subject" value="New 90-Day Sprint discount claim">
+            <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Claim My 50% Off Code</button>
+            <div class="form-status" id="formStatus"></div>
+            <p class="form-fine">By submitting, you agree to receive your discount code and related offers from Jobbyist via email, WhatsApp, and SMS. We never share your details with third parties.</p>
+          </form>
+        </div>
+
+        <div class="success-card" id="successCard">
+          <div class="icon" style="width:54px;height:54px;border-radius:50%;background:var(--good);color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;">✓</div>
+          <h3>You're in.</h3>
+          <p class="sub">Your code is on its way to your inbox. Use it at checkout when you subscribe to Jobbyist Pro.</p>
+          <div class="code" id="codeDisplay">SPRINT50-000</div>
+          <button class="copy-btn" id="copyCodeBtn" type="button">Copy code</button>
+          <a href="https://www.jobbyist.co.za" target="_blank" rel="noopener" class="btn btn-primary btn-block" style="margin-top:18px;">Go to Jobbyist Pro Checkout</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       MONEY-BACK GUARANTEE
+       =================================================================== -->
+  <section class="section-alt">
+    <div class="wrap guarantee-band">
+      <div class="badge-circle">
+        <span class="big">30</span>
+        <span class="sm">DAY GUARANTEE</span>
+      </div>
+      <div>
+        <div class="eyebrow">MONEY-BACK GUARANTEE</div>
+        <h2 style="font-size:clamp(26px,3.4vw,36px);margin-bottom:14px;">Full commitment, fully protected</h2>
+        <p style="color:var(--ink-soft);font-size:15.5px;line-height:1.6;">To qualify for a full refund, show that you engaged in good faith for the full 90 days:</p>
+        <ul class="guarantee-list">
+          <li>Completed all daily and weekly tasks as outlined in the Sprint schedule</li>
+          <li>Applied to the minimum number of roles per week as guided</li>
+          <li>Used all provided templates and tools as directed</li>
+          <li>Attended all scheduled check-ins or gave advance notice</li>
+          <li>Tracked all applications using the provided spreadsheet</li>
+        </ul>
+        <div class="guarantee-warn">Refund requests must be submitted within 7 days of the Sprint end date. Partial participation does not qualify. Questions: <a href="mailto:support@jobbyist.co.za" style="color:var(--blue-1);font-weight:700;">support@jobbyist.co.za</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       FAQ
+       =================================================================== -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">FAQ</div>
+        <h2>Questions, answered</h2>
+        <p>Everything prospective clients ask before starting their Sprint.</p>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>What does each phase of the 90-day methodology involve?<span class="plus">+</span></summary>
+          <div class="faq-answer">The 90-day methodology guides candidates from preparation to placement through six focused phases: foundation, market targeting, applications, visibility, interview readiness, and final review.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What upskilling pathways are available?<span class="plus">+</span></summary>
+          <div class="faq-answer">The program provides access to curated learning tracks from several globally recognized providers to help you earn high-demand certifications.
+
+The available upskilling pathways include:
+— Google Skillshop
+— HubSpot Academy
+— LinkedIn Learning
+— Other globally recognized providers
+
+You select your specific pathway during the Foundation phase (Days 1–7) and work toward completing your certifications through Phase 3 (Days 22–60).</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What's included in the digital toolkit?<span class="plus">+</span></summary>
+          <div class="faq-answer">The digital toolkit is a comprehensive set of AI-powered resources designed to automate and organize your search. It includes:
+
+— Role Radar: an AI tool for job-compatibility scoring
+— Resume/CV Assistant: available as both a mobile and desktop app
+— Generators & Scripts: tools for creating tailored cover letters, Loom video introductions, and audio scripts for recruiter outreach
+— Tracking & Execution: an application tracker, daily execution targets, follow-up templates, and outreach scripts
+— Resource Libraries: access to an interview preparation library and an exclusive digital resource library</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How does the Role Radar compatibility scoring system work?<span class="plus">+</span></summary>
+          <div class="faq-answer">Role Radar is an AI-powered tool within the digital toolkit designed to analyze your compatibility with specific job listings.
+
+While the service handbook doesn't explicitly detail the underlying algorithm, it explains that the tool provides a compatibility score to help you identify high-quality leads. This ensures you are focusing your efforts on roles that closely align with your professional profile. This scoring process is a key activity during Phase 2 (Market Targeting) as you define your target job titles, industries, and countries.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Tell me more about the money-back guarantee.<span class="plus">+</span></summary>
+          <div class="faq-answer">The money-back guarantee for the 90-Day Sprint is tied directly to Jobbyist's published refund policy.
+
+To be eligible, there are specific requirements you must meet, which include:
+— Participation evidence: showing you actively engaged with the program
+— Response-time expectations: meeting the required turnaround times for expert requests
+— Eligibility & exclusions: certain conditions or situations may exclude a refund
+
+Notably, if you are a Jobbyist Pro subscriber accessing the Sprint for free after renewing your subscription, the 30-day money-back guarantee does not apply.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What are the performance guarantees?<span class="plus">+</span></summary>
+          <div class="faq-answer">The program offers two primary performance benchmarks based on historical data:
+
+— Interview rate: candidates see an average of 4 verified job interviews within 60 days
+— Hiring rate: there is a +73% higher hire rate compared to searching alone in the current market
+
+It is important to note that while the Sprint improves your strategy and application quality, it does not guarantee employment or specific job offers. Final outcomes depend on external factors like market conditions and employer decisions. To ensure these results, the program requires active participation from you.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do mock interviews with AI and human experts work?<span class="plus">+</span></summary>
+          <div class="faq-answer">Mock interviews take place during Phase 5: Interview Readiness (Days 60–85) to build your confidence and refine your execution.
+
+The process involves:
+— Combined expertise: 1-on-1 coaching from a Jobbyist placement expert alongside AI-enhanced strategy sessions using models like Claude, Gemini, and OpenAI
+— Modern simulation: practice includes voice-note and Loom-based exercises to mimic real-world digital interview formats
+— Practical prep: sessions cover both standard interview questions and practical task preparation for any technical assessments you might face</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What are the client's responsibilities?<span class="plus">+</span></summary>
+          <div class="faq-answer">To ensure the success of the Sprint and maintain eligibility for the performance and money-back guarantees, your responsibilities as a client include:
+
+— Accuracy & honesty: provide an accurate work history and qualifications, avoiding false or misleading information
+— Active engagement: complete daily application actions and actively engage with your chosen upskilling modules
+— Responsiveness: respond to requests from your placement expert promptly
+— Tracking: maintain honest tracking of your progress and applications
+— Final approval: you remain responsible for the final approval of all job applications submitted
+— Truthful materials: AI helps improve speed and quality, but you must ensure all materials remain truthful and specific to your experience</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What are Jobbyist's responsibilities?<span class="plus">+</span></summary>
+          <div class="faq-answer">Jobbyist's responsibilities focus on providing the expert framework and technical support needed for your search. Their specific duties include:
+
+— Resources & guidance: providing all necessary templates, trackers, and structured expert support throughout the 90 days
+— Strategy & quality: assisting you with role targeting and ensuring the quality of your applications
+— Personalised support: offering 1-on-1 guidance from a placement expert and conducting weekly strategy calls and progress reviews
+— Transparency: communicating clearly about the program's limitations and setting realistic expectations for outcomes
+— Data protection: protecting your personal information and documents</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What are the operating rules for the 90-day period?<span class="plus">+</span></summary>
+          <div class="faq-answer">The operating rules for the 90-day period are designed to maintain the structure and integrity of the program. They include:
+
+— Fixed duration: the Sprint runs for exactly 90 calendar days from your confirmed start date
+— Tier-based extensions: depending on your service tier, there may be options to extend the program if needed
+— No guarantee of employment: the service is a placement system designed to improve your chances, but it does not guarantee a job offer or employment — success depends partly on market conditions and employer decisions
+— Final approval authority: you remain responsible for the final approval of every job application submitted; experts and AI tools assist you, but you have the final say
+— Truthfulness in AI use: AI enhances the speed and quality of your materials, but all generated content must remain truthful and specific to your actual experience</div>
+        </details>
+      </div>
+
+      <div class="concierge-cta">
+        <p>Have more questions? Ask our AI chatbot, <strong>Concierge</strong>, about the 90-day methodology for more detailed answers.</p>
+        <button class="btn btn-primary" id="concierge-launch" type="button">Chat with Concierge</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       TECH PARTNERS — AUTO-ROTATING
+       =================================================================== -->
+  <section class="section-alt">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:30px;">
+        <div class="eyebrow">POWERED BY</div>
+        <h2 style="font-size:clamp(24px,3vw,32px);">Built on a serious tech stack</h2>
+      </div>
+      <div class="partners-shell">
+        <div class="partners-row" id="partnersRow">
+          <div class="partner-slot">PARTNER LOGO</div>
+          <div class="partner-slot">PARTNER LOGO</div>
+          <div class="partner-slot">PARTNER LOGO</div>
+          <div class="partner-slot">PARTNER LOGO</div>
+          <div class="partner-slot">PARTNER LOGO</div>
+        </div>
+        <div class="partners-dots" id="partnersDots"></div>
+        <p class="partners-note">Logo placeholders — swap in your technology partner marks (e.g. Claude, OpenAI, Google, LinkedIn, Indeed, Upwork).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       FOOTER
+       =================================================================== -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <div>
+          <span class="logo-jobbyist" style="color:#fff;">JOBBYIST<span class="dot">.</span></span>
+          <p style="margin-top:14px;max-width:280px;">A premium, AI-enhanced career placement programme helping South African candidates secure meaningful employment — full-time, part-time, remote, hybrid, contract, or freelance.</p>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <a href="tel:+27128806560">+27 12-880-6560</a>
+          <a href="https://www.jobbyist.co.za" target="_blank" rel="noopener">www.jobbyist.co.za</a>
+          <a href="mailto:support@jobbyist.co.za">support@jobbyist.co.za</a>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <a href="Service_Handbook_90-Day_Job_Sprint_by_Jobbyist.pdf" target="_blank" rel="noopener">Service Handbook (PDF)</a>
+          <a href="#faq">FAQ</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+        <div>
+          <h4>Offer</h4>
+          <a href="#claim">Claim 50% Off</a>
+          <a href="#method">The Method</a>
+          <a href="#included">What's Included</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Jobbyist is not a recruitment agency and does not place candidates or guarantee employment outcomes. Outcomes depend on market conditions, employer decisions, and your own engagement. See the full disclaimer in the Service Handbook.</p>
+        <p>© 2026 Jobbyist South Africa. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /#site -->
+
+<script>
+(function(){
+  "use strict";
+
+  /* =====================================================================
+     0. CONFIG — replace these before going live
+     ===================================================================== */
+  // Replace with your real Formspree endpoint (formspree.io/f/XXXXXXX).
+  var FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+
+  // PLACEHOLDER discount code pool. No real code list was supplied —
+  // these are generated sample codes (SPRINT50-001 ... SPRINT50-100).
+  // Replace CODE_POOL with your actual 100-code list before launch.
+  var CODE_POOL = Array.from({length:100}, function(_, i){
+    return "SPRINT50-" + String(i + 1).padStart(3, "0");
+  });
+  var TOTAL_SEATS = CODE_POOL.length;
+
+  /* =====================================================================
+     1. PRELOADER
+     ===================================================================== */
+  var MIN_LOAD_MS = 3200, MAX_LOAD_MS = 4800;
+  var loadDelay = MIN_LOAD_MS + Math.random() * (MAX_LOAD_MS - MIN_LOAD_MS);
+
+  function hidePreloader(){
+    var pre = document.getElementById("preloader");
+    var site = document.getElementById("site");
+    pre.classList.add("hide");
+    site.classList.add("ready");
+    document.body.classList.remove("is-loading");
+    setTimeout(function(){ pre.style.display = "none"; }, 700);
+  }
+
+  window.addEventListener("load", function(){
+    setTimeout(hidePreloader, loadDelay);
+  });
+  // Fallback in case 'load' never fires (e.g. slow video asset)
+  setTimeout(hidePreloader, MAX_LOAD_MS + 1500);
+
+  /* =====================================================================
+     2. SEATS / DISCOUNT CODE COUNTER
+        Uses Claude artifact persistent storage when available (shared,
+        cross-session). Falls back to a generic "limited to 100" message
+        with no live counter when storage isn't available — e.g. once
+        this file is deployed on your own domain outside the Claude
+        artifact sandbox. For production, wire this to a real backend
+        (Supabase is a good fit) so the count is accurate across all
+        visitors.
+     ===================================================================== */
+  var storageAvailable = !!(window.storage && typeof window.storage.get === "function");
+
+  function setSeatsUI(claimedCount){
+    var remaining = Math.max(TOTAL_SEATS - claimedCount, 0);
+    var pct = Math.min((claimedCount / TOTAL_SEATS) * 100, 100);
+    var badge = document.getElementById("seatsBadge");
+    var fill = document.getElementById("seatsFill");
+    var txt = document.getElementById("seatsTxt");
+    if (remaining <= 0){
+      badge.textContent = "SOLD OUT";
+      txt.textContent = "All 100 codes have been claimed";
+    } else {
+      badge.textContent = remaining + " SPOTS LEFT";
+      txt.textContent = claimedCount + " of " + TOTAL_SEATS + " redeemed";
+    }
+    fill.style.width = pct + "%";
+  }
+
+  async function refreshSeatsDisplay(){
+    if (!storageAvailable){
+      document.getElementById("seatsTxt").textContent = "Limited to the first 100 redemptions";
+      return;
+    }
+    try {
+      var res = await window.storage.get("jobbyist-sprint-claimed-count", true);
+      var count = res && res.value ? parseInt(res.value, 10) : 0;
+      setSeatsUI(count);
+    } catch (e){
+      document.getElementById("seatsTxt").textContent = "Limited to the first 100 redemptions";
+    }
+  }
+  refreshSeatsDisplay();
+
+  async function claimNextCode(payload){
+    var email = (payload.email || "").trim().toLowerCase();
+
+    if (!storageAvailable){
+      // No persistent storage available outside the artifact sandbox.
+      // Issue a pseudo-random code so the demo still functions; in
+      // production this branch should call your real backend instead.
+      return { code: CODE_POOL[Math.floor(Math.random() * TOTAL_SEATS)], soldOut: false, fallback: true };
+    }
+
+    try {
+      // Duplicate-claim check
+      try {
+        var existing = await window.storage.get("jobbyist-claim:" + email, true);
+        if (existing && existing.value){
+          var prev = JSON.parse(existing.value);
+          return { code: prev.code, soldOut: false, duplicate: true };
+        }
+      } catch (eDup){ /* no existing claim — continue */ }
+
+      var countRes;
+      try {
+        countRes = await window.storage.get("jobbyist-sprint-claimed-count", true);
+      } catch (eCount){ countRes = null; }
+      var count = countRes && countRes.value ? parseInt(countRes.value, 10) : 0;
+
+      if (count >= TOTAL_SEATS){
+        return { code: null, soldOut: true };
+      }
+
+      var code = CODE_POOL[count];
+      var newCount = count + 1;
+
+      await window.storage.set("jobbyist-sprint-claimed-count", String(newCount), true);
+      await window.storage.set("jobbyist-claim:" + email, JSON.stringify({
+        name: payload.name, email: email, phone: payload.phone, code: code, ts: Date.now()
+      }), true);
+
+      setSeatsUI(newCount);
+      return { code: code, soldOut: false };
+    } catch (err){
+      return { code: CODE_POOL[Math.floor(Math.random() * TOTAL_SEATS)], soldOut: false, fallback: true };
+    }
+  }
+
+  /* =====================================================================
+     3. CLAIM FORM
+     ===================================================================== */
+  var form = document.getElementById("claimForm");
+  var submitBtn = document.getElementById("submitBtn");
+  var formStatus = document.getElementById("formStatus");
+
+  function showError(fieldId, show){
+    var el = document.getElementById(fieldId);
+    el.classList.toggle("invalid", show);
+  }
+
+  function isValidEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function isValidPhone(v){ return /^[0-9+()\-\s]{7,20}$/.test(v); }
+
+  form.addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    var name = document.getElementById("fullName").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var phone = document.getElementById("phone").value.trim();
+
+    var nameOk = name.length > 1;
+    var emailOk = isValidEmail(email);
+    var phoneOk = isValidPhone(phone);
+
+    showError("fld-name", !nameOk);
+    showError("fld-email", !emailOk);
+    showError("fld-phone", !phoneOk);
+
+    if (!nameOk || !emailOk || !phoneOk) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Claiming your code…";
+    formStatus.className = "form-status show";
+    formStatus.textContent = "";
+
+    var result = await claimNextCode({ name: name, email: email, phone: phone });
+
+    if (result.soldOut){
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Claim My 50% Off Code";
+      formStatus.className = "form-status show err";
+      formStatus.textContent = "All 100 codes have been claimed. Join our mailing list and we'll notify you if a new batch opens up.";
+      return;
+    }
+
+    document.getElementById("discountCodeField").value = result.code;
+
+    // Fire-and-forget submission to Formspree so the team gets the lead
+    // (name, email, phone, assigned code) by email. Configure a
+    // Formspree autoresponder on your end if you also want the code
+    // emailed to the user automatically from their dashboard.
+    try {
+      await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: new FormData(form)
+      });
+    } catch (err){
+      // Network/config issue with Formspree shouldn't block the user
+      // from seeing their code on-screen.
+    }
+
+    document.getElementById("codeDisplay").textContent = result.code;
+    document.getElementById("formState").style.display = "none";
+    document.getElementById("successCard").classList.add("show");
+  });
+
+  document.getElementById("copyCodeBtn").addEventListener("click", function(){
+    var code = document.getElementById("codeDisplay").textContent;
+    navigator.clipboard && navigator.clipboard.writeText(code);
+    this.textContent = "Copied!";
+    var self = this;
+    setTimeout(function(){ self.textContent = "Copy code"; }, 1800);
+  });
+
+  /* =====================================================================
+     4. PARTNER LOGO ROTATOR (5 visible slots, rotates every 5s)
+     ===================================================================== */
+  var PARTNER_NAMES = ["PARTNER 01", "PARTNER 02", "PARTNER 03", "PARTNER 04", "PARTNER 05", "PARTNER 06", "PARTNER 07", "PARTNER 08"];
+  var slots = Array.prototype.slice.call(document.querySelectorAll("#partnersRow .partner-slot"));
+  var dotsWrap = document.getElementById("partnersDots");
+  var totalPages = Math.ceil(PARTNER_NAMES.length / slots.length);
+  var page = 0;
+
+  for (var d = 0; d < totalPages; d++){
+    var dot = document.createElement("span");
+    if (d === 0) dot.className = "active";
+    dotsWrap.appendChild(dot);
+  }
+
+  function renderPartnerPage(p){
+    var dots = dotsWrap.children;
+    for (var i = 0; i < dots.length; i++){ dots[i].className = i === p ? "active" : ""; }
+    slots.forEach(function(slot, idx){
+      var nameIdx = (p * slots.length + idx) % PARTNER_NAMES.length;
+      slot.style.opacity = 0;
+      setTimeout(function(){
+        slot.textContent = PARTNER_NAMES[nameIdx];
+        slot.style.opacity = 1;
+      }, 220);
+    });
+  }
+  renderPartnerPage(0);
+  setInterval(function(){
+    page = (page + 1) % totalPages;
+    renderPartnerPage(page);
+  }, 5000);
+
+  /* =====================================================================
+     5. CONCIERGE PLACEHOLDER
+     ===================================================================== */
+  document.getElementById("concierge-launch").addEventListener("click", function(){
+    // Wire this up to your real Concierge chatbot widget.
+    alert("Concierge chatbot goes here — connect your chatbot widget/script to this button.");
+  });
+
+})();
+</script>
+
+</body>
+</html>
